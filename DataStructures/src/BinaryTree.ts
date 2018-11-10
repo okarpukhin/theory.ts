@@ -135,6 +135,35 @@ export class BinaryTree<T extends (number | string)>{
         }
     }
 
+    levelOrderTraversal(): T[]{
+        let result = [];
+        if(!isNullOrUndefined(this.root)){
+            let current = [this.root];
+            while(current.length > 0){
+                result.push(...current.map(f=>f.value));
+                let newCurrent = [];
+                current.forEach(f=>{
+                    if(!isNullOrUndefined(f.left)){
+                        newCurrent.push(f.left);
+                    }
+                    if(!isNullOrUndefined(f.right)){
+                        newCurrent.push(f.right);
+                    }
+                });
+                current = newCurrent;
+            }
+        }
+        return result;
+    }
+
+    private levelOrderTraversalFrom(node: Node<T>, handler: (value: T) => void){
+        if(!isNullOrUndefined(node)){
+            this.levelOrderTraversalFrom(node.left, handler);
+            this.levelOrderTraversalFrom(node.right, handler);
+            handler(node.value);
+        }
+    }
+
     contains(value: T): boolean{
         let current = this.root;
         while(!isNullOrUndefined(current)){

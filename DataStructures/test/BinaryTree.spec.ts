@@ -75,6 +75,11 @@ describe('BinaryTree', () => {
         assert.equal(tree.postOrderTraversal().join(" "), "1 4 7 6 3 13 14 10 8");
     });
 
+    it('levelOrderTraversal', () => {
+        let tree = new BinaryTree<number>(8,3,1,6,4,7,10,14,13);
+        assert.equal(tree.levelOrderTraversal().join(" "), "8 3 10 1 6 14 4 7 13");
+    });
+
     it('contains', () => {
         let tree = new BinaryTree<number>(8,3,1,6,4,7,10,14,13);
         assert.isTrue(tree.contains(13));
