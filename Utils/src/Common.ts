@@ -24,10 +24,16 @@ export function swap(array: any[], indexA: number, indexB: number): void{
     array[indexB] = temp;
 }
 
-export function arraysAreEqual<T>(array1: T[], array2: T[]):boolean{
+export function arraysAreEqual<T>(array1: T[], array2: T[], withSort = false):boolean{
     if(array1.length !== array2.length){
         return false;
     }
+
+    if(withSort === true){
+        array1.sort();
+        array2.sort();
+    }
+
     for(let i = 0; i < array1.length; i++){
         if(array1[i] !== array2[i]){
             return false;

@@ -26,11 +26,20 @@ describe('Common', () => {
         assert.equal(array[3], 2);
     });
 
-    it('arraysAreEqual', () => {
+    it('arraysAreEqual without sort', () => {
         assert.isTrue(arraysAreEqual([1,2,3,4], [1,2,3,4]));
         assert.isTrue(arraysAreEqual([], []));
         assert.isFalse(arraysAreEqual([1,2,3,4], [1,2,3]));
         assert.isFalse(arraysAreEqual([1,2,3,4], [1,2,3,5]));
+        assert.isFalse(arraysAreEqual([1,2,3,4], [1,2,4,3]));
+    });
+
+    it('arraysAreEqual with sort', () => {
+        assert.isTrue(arraysAreEqual([1,2,3,4], [1,2,3,4], true));
+        assert.isTrue(arraysAreEqual([], [], true));
+        assert.isFalse(arraysAreEqual([1,2,3,4], [1,2,3], true));
+        assert.isFalse(arraysAreEqual([1,2,3,4], [1,2,3,5], true));
+        assert.isTrue(arraysAreEqual([1,2,3,4], [1,2,4,3], true));
     });
 
     it('isSortedArray', () => {
