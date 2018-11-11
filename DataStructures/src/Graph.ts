@@ -6,12 +6,18 @@ import { Queue } from "./Queue";
 export class Graph<T extends number | string>{
     readonly vertices: HashMap<T,Vertex<T>> = new HashMap();
 
+    /**
+     * Complexity O(1)
+     */
     addVertex(...values: T[]) {
         values.forEach(value => {
             this.vertices.addOrUpdate(value, new Vertex(value), (key, oldValue) => oldValue);
         });
     }
 
+    /**
+     * Complexity O(1)
+     */
     addEdgeOrUpdate(from: T, to: T, weight: number = 0, bidirectional: boolean = true){
         if(from === to){
             throw new Error("From and to mustn't be equal");
@@ -29,6 +35,9 @@ export class Graph<T extends number | string>{
         new Edge(weight, fromVertex, toVertex, bidirectional);
     }
 
+    /**
+     * Complexity O(n)
+     */
     removeVertex(value: T):boolean{
         let vertex = this.vertices.get(value);
         if(!vertex){
@@ -42,6 +51,9 @@ export class Graph<T extends number | string>{
         return true;
     }
 
+    /**
+     * Complexity O(1)
+     */
     removeEdge(from: T, to: T):boolean{
         let fromVertext = this.vertices.get(from);
         if(!fromVertext){
@@ -56,6 +68,24 @@ export class Graph<T extends number | string>{
         return true;
     }
 
+    /**
+     * Complexity O(1)
+     */
+    hasVertex(value: T){
+        return this.vertices.get(value) !== null;
+    }
+
+    /**
+     * Complexity O(1)
+     */
+    hasEdge(from: T, to: T){
+        let fromVertex = this.vertices.get(from);
+        return fromVertex !== null && fromVertex.edges.get(to) !== null;
+    }
+
+    /**
+     * Complexity O(|V|+|E|)
+     */
     depthFirstSearch(from: T, to: T): T[]{
         let fromVertex = this.vertices.get(from);
         if(!fromVertex){
@@ -106,6 +136,9 @@ export class Graph<T extends number | string>{
         return new LinkedList();
     }
 
+    /**
+     * Complexity O(|V|+|E|)
+     */
     breadthFirstSearch(from: T, to: T): T[]{
         let fromVertex = this.vertices.get(from);
         if(!fromVertex){

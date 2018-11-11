@@ -1,4 +1,4 @@
-export class BinaryTree<T extends (number | string)>{
+export class BinaryTree<T extends number | string>{
     private root: Node<T>;
 
     constructor(...items: T[]){
@@ -7,7 +7,7 @@ export class BinaryTree<T extends (number | string)>{
 
     
     /**
-     * Add value to tree. O(h)
+     * Complexity O(h)
      * @param value  Value for add.
      */
     add(value: T): void {
