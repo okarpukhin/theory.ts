@@ -1,6 +1,6 @@
 import { Trie } from '../src/Trie';
 import { arraysAreEqual } from "../../Utils/src/Common";
-import { assert, expect } from 'chai';
+import { assert } from 'chai';
 
 describe('Trie', () => {
     let words = ["hello", "world", "welcome", "home", "sunday", "sun"];

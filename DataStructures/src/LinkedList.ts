@@ -1,24 +1,29 @@
-import { isNullOrUndefined } from "../../Utils/src/Common"
-
 export class LinkedList<T>{
     private head: Node<T>;
+    private tail: Node<T>;
 
     constructor(...items: T[]){
         items.forEach(f=>this.add(f));
     }
 
-    add(value:T){
-        let node = new Node(value);
+    add(...values:T[]){
+        values.forEach(value => {
+            let node = new Node(value);
 
-        if(isNullOrUndefined(this.head)){
-            this.head = node;
-        } else {
-            let current = this.head;
-            while(!isNullOrUndefined(current.next)){
-                current = current.next;
+            if(!this.head){
+                this.head = node;
+            } else {
+                this.tail.next = node;
             }
-            current.next = node;
-        }
+
+            this.tail = node;
+        });
+    }
+
+    addToHead(value:T){
+        let node = new Node(value);
+        node.next = this.head;
+        this.head = node;
     }
 
     /**
@@ -29,35 +34,41 @@ export class LinkedList<T>{
     remove(value:T):boolean{
         let current = this.head;
         let prev: Node<T>;
-        while(!isNullOrUndefined(current) && current.value !== value){
+        while(current && current.value !== value){
             prev = current;
             current = current.next;
         }
-        if(isNullOrUndefined(current)){
+        if(!current){
             return false;
         }
 
-        if(isNullOrUndefined(prev)){
+        if(!prev){
             this.head = this.head.next;
+            if(!this.head){
+                this.tail = null;
+            }
         } else {
             prev.next = current.next;
+            if(!prev.next){
+                this.tail = null;
+            }
         }
         return true;
     }
 
     contains(value:T):boolean{
         let current = this.head;
-        while(!isNullOrUndefined(current) && current.value !== value){
+        while(current && current.value !== value){
             current = current.next;
         }
-        return !isNullOrUndefined(current);
+        return !!current;
     }
 
     size(): number{
         let result = 0;
         
         let current = this.head;
-        while(!isNullOrUndefined(current)) {
+        while(current) {
             current = current.next;
             result++;
         }
@@ -68,7 +79,7 @@ export class LinkedList<T>{
     toArray(): T[]{
         let res: T[] = [];
         let current = this.head;
-        while(!isNullOrUndefined(current)) {
+        while(current) {
             res.push(current.value);
             current = current.next;
         }

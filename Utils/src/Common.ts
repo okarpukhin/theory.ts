@@ -1,21 +1,24 @@
 export const capacity = 32;
 
-export function getHashCode(key: string | number): number {
+export function getHashCode(key): number {
     if(typeof(key) === "number"){
         return key % capacity;
     }
 
+    let keyString: string;
+    if((typeof(key) === "string")){
+        keyString = key;
+    } else {
+        keyString = JSON.stringify(key);
+    }
+
     let hash = 0;
-    for (let i = 0; i < key.length; i++) {
-        let chr = key.charCodeAt(i);
+    for (let i = 0; i < keyString.length; i++) {
+        let chr = keyString.charCodeAt(i);
         hash  = ((hash << 5) - hash) + chr;
         hash |= 0; // Convert to 32bit integer
     }
     return hash % capacity;
-}
-
-export let isNullOrUndefined = (value: any):boolean => {
-    return value === null || value === undefined;
 }
 
 export function swap(array: any[], indexA: number, indexB: number): void{

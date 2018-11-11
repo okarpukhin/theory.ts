@@ -1,35 +1,35 @@
 import { getHashCode, capacity } from "../../Utils/src/Common"
 
-export class HashMap<TKey, TValue>{
-    private readonly items: Entry<TKey,TValue>[] = new Array<Entry<TKey,TValue>>(capacity);
+export class HashSet<T>{
+    private readonly items: Entry<T>[] = new Array<Entry<T>>(capacity);
 
-    addOrUpdate(key: TKey, value: TValue, updateValueFactory?: (key: TKey, oldValue: TValue) => TValue){
+    constructor(...items: T[]){
+        items.forEach(f=>this.add(f));
+    }
+
+    add(key: T):boolean{
         let index = getHashCode(key);
         
         let item = this.items[index];
         if(!item){
-            this.items[index] = new Entry<TKey,TValue>(key, value);
-            return;
+            this.items[index] = new Entry(key);
+            return true;
         }
 
-        let tail: Entry<TKey,TValue>;
+        let tail: Entry<T>;
         while(item && item.key !== key){
             tail = item;
             item = item.next;
         }
 
         if(!item){
-            tail.next = new Entry<TKey,TValue>(key, value);
-        } else {
-            if(updateValueFactory){
-                item.value = updateValueFactory(key, item.value);
-            } else {
-                item.value = value;
-            }
+            tail.next = new Entry(key);
+            return true;
         }
+        return false;
     }
 
-    get(key: TKey): TValue {
+    contains(key: T): boolean {
         let index = getHashCode(key);
         let item = this.items[index];
 
@@ -37,14 +37,14 @@ export class HashMap<TKey, TValue>{
             item = item.next;
         }
 
-        return item ? item.value : null;
+        return !!item;
     }
 
-    remove(key: TKey): boolean{
+    remove(key: T): boolean{
         let index = getHashCode(key);
         let item = this.items[index];
 
-        let prev: Entry<TKey,TValue>;
+        let prev: Entry<T>;
         while(item && item.key !== key){
             prev = item;
             item = item.next;
@@ -62,12 +62,12 @@ export class HashMap<TKey, TValue>{
         return true;
     }
 
-    toArray(): TValue[]{
-        let result:TValue[] = [];
+    toArray(): T[]{
+        let result:T[] = [];
         this.items.filter(f=>f).forEach(f=>{
             let current = f;
             while(current){
-                result.push(current.value);
+                result.push(current.key);
                 current = current.next;
             } 
         });
@@ -75,13 +75,11 @@ export class HashMap<TKey, TValue>{
     }
 }
 
-class Entry<TKey,TValue>{
-    next: Entry<TKey,TValue>;
-    readonly key: TKey;
-    value: TValue;
+class Entry<T>{
+    next: Entry<T>;
+    readonly key: T;
     
-    constructor(key: TKey, value: TValue){
+    constructor(key: T){
         this.key = key;
-        this.value = value;
     }
 }

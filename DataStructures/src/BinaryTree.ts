@@ -1,5 +1,3 @@
-import { isNullOrUndefined } from "../../Utils/src/Common"
-
 export class BinaryTree<T extends (number | string)>{
     private root: Node<T>;
 
@@ -17,7 +15,7 @@ export class BinaryTree<T extends (number | string)>{
     }
 
     private addTo(value: T, parent: Node<T>): Node<T>{
-        if(isNullOrUndefined(parent)){
+        if(!parent){
             return new Node<T>(value);
         }
 
@@ -30,7 +28,7 @@ export class BinaryTree<T extends (number | string)>{
     }
 
     toString():string{
-        return isNullOrUndefined(this.root) ? "" : this.root.toString();
+        return !this.root ? "" : this.root.toString();
     }
 
     remove(value: T){
@@ -38,7 +36,7 @@ export class BinaryTree<T extends (number | string)>{
     }
 
     private removeFrom(value: T, node: Node<T>):Node<T>{
-        if(isNullOrUndefined(node)){
+        if(!node){
             return node;
         }
 
@@ -47,11 +45,11 @@ export class BinaryTree<T extends (number | string)>{
         } else if(value > node.value){
             node.right = this.removeFrom(value, node.right);
         } else {
-            if(isNullOrUndefined(node.left) && isNullOrUndefined(node.right)){
+            if(!node.left && !node.right){
                 return null;
-            } else if(isNullOrUndefined(node.left)) {
+            } else if(!node.left) {
                 return node.right;
-            } else if(isNullOrUndefined(node.right)) {
+            } else if(!node.right) {
                 return node.left;
             } else {
                 node.value = this.getMinimumFrom(node.right);
@@ -66,11 +64,11 @@ export class BinaryTree<T extends (number | string)>{
     }
 
     private getMinimumFrom(node: Node<T>): T{
-        if(isNullOrUndefined(node)){
+        if(!node){
             return null;
         }
 
-        if(!isNullOrUndefined(node.left)){
+        if(node.left){
             return this.getMinimumFrom(node.left);
         }
 
@@ -82,11 +80,11 @@ export class BinaryTree<T extends (number | string)>{
     }
 
     private getMaximumFrom(node: Node<T>): T{
-        if(isNullOrUndefined(node)){
+        if(!node){
             return null;
         }
 
-        if(!isNullOrUndefined(node.right)){
+        if(node.right){
             return this.getMaximumFrom(node.right);
         }
         
@@ -100,7 +98,7 @@ export class BinaryTree<T extends (number | string)>{
     }
 
     private inOrderTraversalFrom(node: Node<T>, handler: (value: T) => void){
-        if(!isNullOrUndefined(node)){
+        if(node){
             this.inOrderTraversalFrom(node.left, handler);
             handler(node.value);
             this.inOrderTraversalFrom(node.right, handler);
@@ -114,7 +112,7 @@ export class BinaryTree<T extends (number | string)>{
     }
 
     private preOrderTraversalFrom(node: Node<T>, handler: (value: T) => void){
-        if(!isNullOrUndefined(node)){
+        if(node){
             handler(node.value);
             this.preOrderTraversalFrom(node.left, handler);
             this.preOrderTraversalFrom(node.right, handler);
@@ -128,7 +126,7 @@ export class BinaryTree<T extends (number | string)>{
     }
 
     private postOrderTraversalFrom(node: Node<T>, handler: (value: T) => void){
-        if(!isNullOrUndefined(node)){
+        if(node){
             this.postOrderTraversalFrom(node.left, handler);
             this.postOrderTraversalFrom(node.right, handler);
             handler(node.value);
@@ -137,16 +135,16 @@ export class BinaryTree<T extends (number | string)>{
 
     levelOrderTraversal(): T[]{
         let result = [];
-        if(!isNullOrUndefined(this.root)){
+        if(this.root){
             let current = [this.root];
             while(current.length > 0){
                 result.push(...current.map(f=>f.value));
                 let newCurrent = [];
                 current.forEach(f=>{
-                    if(!isNullOrUndefined(f.left)){
+                    if(f.left){
                         newCurrent.push(f.left);
                     }
-                    if(!isNullOrUndefined(f.right)){
+                    if(f.right){
                         newCurrent.push(f.right);
                     }
                 });
@@ -157,7 +155,7 @@ export class BinaryTree<T extends (number | string)>{
     }
 
     private levelOrderTraversalFrom(node: Node<T>, handler: (value: T) => void){
-        if(!isNullOrUndefined(node)){
+        if(node){
             this.levelOrderTraversalFrom(node.left, handler);
             this.levelOrderTraversalFrom(node.right, handler);
             handler(node.value);
@@ -166,7 +164,7 @@ export class BinaryTree<T extends (number | string)>{
 
     contains(value: T): boolean{
         let current = this.root;
-        while(!isNullOrUndefined(current)){
+        while(current){
             if(value === current.value){
                 return true;
             } 
@@ -184,7 +182,7 @@ export class BinaryTree<T extends (number | string)>{
     }
 
     private getHeightFrom(node: Node<T>): number{
-        if(isNullOrUndefined(node)){
+        if(!node){
             return 0;
         }
         return Math.max(this.getHeightFrom(node.left), this.getHeightFrom(node.right)) + 1
@@ -195,7 +193,7 @@ export class BinaryTree<T extends (number | string)>{
     }
     
     private isBalancedFrom(node: Node<T>):boolean {
-        if (isNullOrUndefined(node))
+        if (!node)
             return true;
         
         return this.isBalancedFrom(node.left) && this.isBalancedFrom(node.right) 
@@ -214,10 +212,10 @@ class Node<T extends (number | string)> {
 
     toString():string{
         var result = "(" + this.value;
-        if(!isNullOrUndefined(this.left)){
+        if(this.left){
             result += " " + this.left.toString();
         }
-        if(!isNullOrUndefined(this.right)){
+        if(this.right){
             result += " " + this.right.toString();
         }
         return result + ")";
