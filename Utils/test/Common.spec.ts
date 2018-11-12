@@ -1,4 +1,4 @@
-import { getHashCode, capacity, swap, arraysAreEqual, isSortedArray } from '../src/Common';
+import { getHashCode, capacity, swap, arraysAreEqual, isOrderedArray } from '../src/Common';
 import { assert } from 'chai';
 
 describe('Common', () => {
@@ -34,11 +34,11 @@ describe('Common', () => {
         assert.isTrue(arraysAreEqual([1,2,3,4], [1,2,4,3], true));
     });
 
-    it('isSortedArray', () => {
-        assert.isTrue(isSortedArray([]));
-        assert.isTrue(isSortedArray([1]));
-        assert.isTrue(isSortedArray([1,2,3,4,5,6,7,8]));
-        assert.isFalse(isSortedArray([2,1,3,4,5,6,7,8]));
-        assert.isFalse(isSortedArray([2,1,3,4,5,6,8,7]));
+    it('isOrderedArray', () => {
+        assert.isTrue(isOrderedArray([]));
+        assert.isTrue(isOrderedArray([1]));
+        assert.isTrue(isOrderedArray([1,2,3,4,5,6,7,8]));
+        assert.isFalse(isOrderedArray([2,1,3,4,5,6,7,8]));
+        assert.isFalse(isOrderedArray([2,1,3,4,5,6,8,7]));
     });
 });

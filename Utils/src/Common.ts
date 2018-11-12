@@ -45,7 +45,7 @@ export function arraysAreEqual<T>(array1: T[], array2: T[], withSort = false):bo
     return true;
 }
 
-export function isSortedArray<T extends (number | string)>(array: T[]):boolean{
+export function isOrderedArray<T extends (number | string)>(array: T[]):boolean{
     for(let i = 1; i < array.length; i++){
         if(array[i-1] > array[i]){
             return false;
