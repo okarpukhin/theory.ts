@@ -4,7 +4,7 @@ export function QuickSort<T extends (number | string)>(array: T[]): void{
     doSort(array, 0, array.length - 1);
 }
 
-function doSort(array, from, to){
+function doSort<T>(array: T[], from: number, to: number){
     if(from >= to){
         return;
     }
