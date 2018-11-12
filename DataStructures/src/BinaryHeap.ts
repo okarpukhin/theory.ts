@@ -73,7 +73,11 @@ export class BinaryHeap<T>{
             } else {
                 childIndex = rightIndex;
             }
-            swap(this.items, childIndex, parentIndex);
+            if(this.type === "MaxHeap" && this.items[parentIndex] <= this.items[childIndex] 
+            || this.type === "MinHeap" && this.items[parentIndex] >= this.items[childIndex]){
+                swap(this.items, childIndex, parentIndex);
+            } 
+
             parentIndex = childIndex;
         }
 

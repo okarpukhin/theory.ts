@@ -32,5 +32,15 @@ describe('BinaryHeap Min', () => {
         let heap = new BinaryHeap<number>("MinHeap", ...initialValues);
         assert.equal(heap.pop(), 1);
         assert.deepEqual(heap.items, [6,10,7,17,19,36,100,25]);
+        assert.equal(heap.pop(), 6);
+        assert.equal(heap.pop(), 7);
+        assert.equal(heap.pop(), 10);
+        assert.equal(heap.pop(), 17);
+        assert.equal(heap.pop(), 19);
+        assert.equal(heap.pop(), 25);
+        assert.equal(heap.pop(), 36);
+        assert.equal(heap.pop(), 100);
+
+        assert.isUndefined(heap.pop());
     });
 });
