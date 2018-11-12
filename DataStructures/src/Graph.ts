@@ -32,7 +32,10 @@ export class Graph<T extends number | string>{
             throw new Error("The vertex " + to + " doesn't exist");
         }
 
-        new Edge(weight, fromVertex, toVertex, bidirectional);
+        new Edge(weight, fromVertex, toVertex);
+        if(bidirectional){
+            new Edge(weight, toVertex, fromVertex);
+        }
     }
 
     /**
@@ -43,10 +46,10 @@ export class Graph<T extends number | string>{
         if(!vertex){
             return false;
         }
-        vertex.edges.toArray().forEach(edge=>{
-            edge.from.edges.remove(edge.to.value);
-            edge.to.edges.remove(edge.from.value);
+        this.vertices.toArray().forEach(vertex => {
+            vertex.edges.remove(value);
         });
+
         this.vertices.remove(value);
         return true;
     }
@@ -59,13 +62,7 @@ export class Graph<T extends number | string>{
         if(!fromVertext){
             return false;
         }
-        let edge = fromVertext.edges.get(to);
-        if(!edge){
-            return false;
-        }
-        edge.to.edges.remove(from);
-        edge.from.edges.remove(to);
-        return true;
+        return fromVertext.edges.remove(to);
     }
 
     /**
@@ -112,24 +109,11 @@ export class Graph<T extends number | string>{
 
         let edges = from.edges.toArray();
         for(let i = 0; i < edges.length; i++){
-            if(edges[i].from === from){
-                let next = edges[i].to;
-                let edgeResult = this.doDepthFirstSearch(next, to, visited);
-                if(edgeResult.size()){
-                    let result = new LinkedList(from.value);
-                    result.add(...edgeResult.toArray());
-                    return result;
-                }
-            }
-
-            if(edges[i].to === from && edges[i].bidirectional){
-                let next = edges[i].from;
-                let edgeResult = this.doDepthFirstSearch(next, to, visited);
-                if(edgeResult.size()){
-                    let result = new LinkedList(from.value);
-                    result.add(...edgeResult.toArray());
-                    return result;
-                }
+            let edgeResult = this.doDepthFirstSearch(edges[i].to, to, visited);
+            if(edgeResult.size()){
+                let result = new LinkedList(from.value);
+                result.add(...edgeResult.toArray());
+                return result;
             }
         }
 
@@ -161,23 +145,29 @@ export class Graph<T extends number | string>{
             result.push(vertex.value);
 
             if(vertex === toVertex){
-                break;
+                return result;
             }
 
             let edges = vertex.edges.toArray();
             for(let i = 0; i < edges.length; i++){
-                if(edges[i].from === vertex){
-                    let next = edges[i].to;
-                    queue.enqueue(next);
-                }
-
-                if(edges[i].to === vertex && edges[i].bidirectional){
-                    let next = edges[i].from;
-                    queue.enqueue(next);
-                }
+                queue.enqueue(edges[i].to);
             }
         }
-        return result;
+        return [];
+    }
+
+    isDirectedAcyclicGraph():boolean{
+        let vertices = this.vertices.toArray();
+        for(let i = 0; i < vertices.length; i++){
+            let hasPath = vertices[i].edges.toArray()
+            .map(edge => edge.to)
+            .some(to => this.depthFirstSearch(to.value, vertices[i].value).length > 0);
+            
+            if(hasPath){
+                return false;
+            }
+        }
+        return true;
     }
 }
 
@@ -194,15 +184,12 @@ class Edge<T extends number | string>{
     readonly weight: number;
     readonly from: Vertex<T>;
     readonly to: Vertex<T>;
-    readonly bidirectional: boolean;
 
-    constructor(weight: number, from: Vertex<T>, to: Vertex<T>, bidirectional: boolean){
+    constructor(weight: number, from: Vertex<T>, to: Vertex<T>){
         this.weight = weight;
         this.from = from;
         this.to = to;
-        this.bidirectional = bidirectional;
 
         from.edges.addOrUpdate(to.value, this);
-        to.edges.addOrUpdate(from.value, this);
     }
 }
