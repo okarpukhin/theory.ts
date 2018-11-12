@@ -10,7 +10,7 @@ describe('QuickSort', () => {
         assert.isTrue(isSortedArray(array));
     });
     it('first element greater than next', () => {
-        let array = [5,1,2,4,6,8,7,9];
+        let array = [5,1,2,4,6,8,7,9,-2];
         assert.isFalse(isSortedArray(array));
         QuickSort(array);
         assert.isTrue(isSortedArray(array));
