@@ -53,3 +53,7 @@ export function isOrderedArray<T extends (number | string)>(array: T[]):boolean{
     }
     return true;
 }
+
+export function random(from: number, to: number): number{
+    return Math.round((to - from) * Math.random()) + from;
+}
