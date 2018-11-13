@@ -1,10 +1,9 @@
 import { swap } from "../../../Utils/src/Common";
 
 /**
- * Find the first element in the array, which is equal to toFind
- * @param array 
- * @param toFind 
- * @returns index of found element, otherwise undefined
+ * Complexities: best O(n), average O(n log n), worst O(n²)
+ * Find the k-th smallest element in an unordered array
+ * @returns value of the k-th smallest element
  */
 export function QuickSelect<T extends number | string>(array: T[], k: number):T{
     if(k === 0 || k > array.length){
@@ -34,7 +33,7 @@ function doSort(array, from: number, to: number, k: number){
     swap(array, from, index);
 
     doSort(array, from, index - 1, k);
-    if(index + 1 <= pivotIndex){
+    if(index + 1 <= k){
         doSort(array, index + 1, to, k);
     }
 }

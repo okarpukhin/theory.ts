@@ -46,4 +46,12 @@ describe('Stack', () => {
             stack.pop();
         }).to.throw(Stack.underflowExceptionMessage);
     });
+
+    it('peek', () => {
+        let stack = new Stack<number>(5);
+        stack.push(1);
+        stack.push(2);
+        assert.equal(stack.peek(), 2);
+        assert.equal(stack.size, 2);
+    });
 });

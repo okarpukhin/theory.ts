@@ -1,5 +1,8 @@
 import { swap } from "../../../Utils/src/Common";
 
+/**
+ * Complexities: best O(n log n), average O(n log n), worst O(n²)
+ */
 export function QuickSort<T extends (number | string)>(array: T[]): void{
     doSort(array, 0, array.length - 1);
 }

@@ -1,5 +1,9 @@
 import { random } from "../../../Utils/src/Common";
 
+/**
+ * Randomly choose k items from source array using Algorithm R
+ * Complexity O(n)
+ */
 export function ReservoirSampling<T>(source: T[], k: number): T[]{
     if(source.length < k){
         throw new Error("Invalid arguments");

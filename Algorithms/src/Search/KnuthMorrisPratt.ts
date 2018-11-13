@@ -1,18 +1,25 @@
-export function KnuthMorrisPrattSearch(text: string, search: string): number[]{
-    if(text.length === 0 || search.length === 0 || text.length < search.length){
+/**
+ * Complexity O(n+m)
+ * Find the all positions of all occurrences of the string s in the text.
+ */
+export function KnuthMorrisPrattSearch(text: string, s: string): number[]{
+    if(text.length === 0 || s.length === 0 || text.length < s.length){
         return [];
     }
 
-    let prefixTable = KnuthMorrisPrattPrefixFunction(search + "@" + text);
+    let prefixTable = KnuthMorrisPrattPrefixFunction(s + "@" + text);
     let result: number[] = [];
     prefixTable.forEach((f, index)=>{
-        if(f === search.length){
-            result.push(index - 2 * search.length);
+        if(f === s.length){
+            result.push(index - 2 * s.length);
         }
     });
     return result;
 }
 
+/**
+ * Complexity O(n)
+ */
 export function KnuthMorrisPrattPrefixFunction(input: string):number[]{
     if(input.length === 0){
         return [];
@@ -32,6 +39,9 @@ export function KnuthMorrisPrattPrefixFunction(input: string):number[]{
     return result;
 }
 
+/**
+ * Complexity O(n³)
+ */
 export function NaivePrefixFunction(input: string):number[]{
     let result = new Array<number>(input.length);
    

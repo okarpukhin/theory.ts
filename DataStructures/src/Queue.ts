@@ -1,3 +1,8 @@
+/**
+ * A queue is a list where can only insert new items at the back and remove items from the front. 
+ * This ensures that the first item you enqueue is also the first item you dequeue.
+ * A queue gives you a FIFO or first-in, first-out order. 
+ */
 export class Queue<T>{
     private head: Node<T>;
     private tail: Node<T>;
@@ -6,6 +11,9 @@ export class Queue<T>{
         this.enqueue(...values);
     }
 
+    /**
+     * Complexity O(1)
+     */
     enqueue(...values: T[]){
         values.forEach(value => {
             let node = new Node(value);
@@ -20,6 +28,9 @@ export class Queue<T>{
         });
     }
 
+    /**
+     * Complexity O(1)
+     */
     dequeue():T{
         if(!this.head){
             return undefined;
@@ -27,6 +38,16 @@ export class Queue<T>{
         let head = this.head;
         this.head = this.head.next;
         return head.value;
+    }
+
+    /**
+     * Complexity O(1)
+     */
+    peek():T{
+        if(!this.head){
+            return undefined;
+        }
+        return this.head.value;
     }
 
     size(): number{

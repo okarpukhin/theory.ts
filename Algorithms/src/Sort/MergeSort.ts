@@ -1,3 +1,6 @@
+/**
+ * Complexity O(n log n)
+ */
 export function MergeSort<T extends (number | string)>(array: T[]): T[]{
     return doMergeSort(array, 0, array.length);
 }
