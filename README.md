@@ -1,16 +1,16 @@
-# Search Algorithms
+### Search Algorithms
 - BinarySearch
 - KnuthMorrisPratt
 - QuickSelect
 - ReservoirSampling
 
-# Sort Algorithms
+### Sort Algorithms
 - HeapSort
 - InsertionSort
 - MergeSort
 - QuickSort
 
-# DataStructures
+### Data Structures
 - BinaryHeap (max and min)
 - BinaryTree
 - DynamicArray
