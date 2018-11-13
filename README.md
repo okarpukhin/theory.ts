@@ -10,7 +10,7 @@
 - MergeSort
 - QuickSort
 
-#DataStructures
+# DataStructures
 - BinaryHeap (max and min)
 - BinaryTree
 - DynamicArray
