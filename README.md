@@ -3,6 +3,7 @@
 - [BoyerMooreStringSearch](Algorithms/src/Search/BoyerMooreStringSearch.ts)
 - [KnuthMorrisPratt](Algorithms/src/Search/KnuthMorrisPratt.ts) (prefix function and search)
 - [QuickSelect](Algorithms/src/Search/QuickSelect.ts)
+- [RabinKarpStringSearch](Algorithms/src/Search/RabinKarpStringSearch.ts)
 - [ReservoirSampling](Algorithms/src/Search/ReservoirSampling.ts)
 
 ### Sort Algorithms
