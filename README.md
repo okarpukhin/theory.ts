@@ -16,7 +16,7 @@
 - [BinaryHeap](DataStructures/src/BinaryHeap.ts) (max and min)
 - [BinaryTree](DataStructures/src/BinaryTree.ts) (inOrderTraversal, preOrderTraversal, postOrderTraversal, levelOrderTraversal)
 - [DynamicArray](DataStructures/src/DynamicArray.ts)
-- [Graph](DataStructures/src/Graph.ts) (directed/undirected, depth first search, breadth first search, acyclic graph checking)
+- [Graph](DataStructures/src/Graph.ts) (directed/undirected, depth first search, breadth first search, acyclic graph checking, dijkstra)
 - [HashMap](DataStructures/src/HashMap.ts)
 - [HashSet](DataStructures/src/HashSet.ts)
 - [LinkedList](DataStructures/src/LinkedList.ts)

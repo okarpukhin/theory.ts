@@ -37,7 +37,18 @@ export class HashMap<TKey, TValue>{
             item = item.next;
         }
 
-        return item ? item.value : null;
+        return item ? item.value : undefined;
+    }
+
+    hasKey(key: TKey): boolean {
+        let index = getHashCode(key);
+        let item = this.items[index];
+
+        while(item && item.key !== key){
+            item = item.next;
+        }
+
+        return !!item;
     }
 
     remove(key: TKey): boolean{
@@ -62,12 +73,36 @@ export class HashMap<TKey, TValue>{
         return true;
     }
 
-    toArray(): TValue[]{
+    values(): TValue[]{
         let result:TValue[] = [];
         this.items.filter(f=>f).forEach(f=>{
             let current = f;
             while(current){
                 result.push(current.value);
+                current = current.next;
+            } 
+        });
+        return result;
+    }
+
+    keys(): TKey[]{
+        let result:TKey[] = [];
+        this.items.filter(f=>f).forEach(f=>{
+            let current = f;
+            while(current){
+                result.push(current.key);
+                current = current.next;
+            } 
+        });
+        return result;
+    }
+
+    toDictionary(){
+        let result: any = {};
+        this.items.filter(f=>f).forEach(f=>{
+            let current = f;
+            while(current){
+                result[current.key] = current.value;
                 current = current.next;
             } 
         });

@@ -23,6 +23,10 @@ export class Graph<T extends number | string>{
             throw new Error("From and to mustn't be equal");
         }
 
+        if(weight < 0){
+            throw new Error("Weight mustn't be less than 0");
+        }
+
         let fromVertex = this.vertices.get(from);
         if(!fromVertex){
             throw new Error("The vertex " + from + " doesn't exist");
@@ -46,7 +50,7 @@ export class Graph<T extends number | string>{
         if(!vertex){
             return false;
         }
-        this.vertices.toArray().forEach(vertex => {
+        this.vertices.values().forEach(vertex => {
             vertex.edges.remove(value);
         });
 
@@ -107,7 +111,7 @@ export class Graph<T extends number | string>{
             return new LinkedList(from.value);
         }
 
-        let edges = from.edges.toArray();
+        let edges = from.edges.values();
         for(let i = 0; i < edges.length; i++){
             let edgeResult = this.doDepthFirstSearch(edges[i].to, to, visited);
             if(edgeResult.size()){
@@ -148,7 +152,7 @@ export class Graph<T extends number | string>{
                 return result;
             }
 
-            let edges = vertex.edges.toArray();
+            let edges = vertex.edges.values();
             for(let i = 0; i < edges.length; i++){
                 queue.enqueue(edges[i].to);
             }
@@ -157,9 +161,9 @@ export class Graph<T extends number | string>{
     }
 
     isDirectedAcyclicGraph():boolean{
-        let vertices = this.vertices.toArray();
+        let vertices = this.vertices.values();
         for(let i = 0; i < vertices.length; i++){
-            let hasPath = vertices[i].edges.toArray()
+            let hasPath = vertices[i].edges.values()
             .map(edge => edge.to)
             .some(to => this.depthFirstSearch(to.value, vertices[i].value).length > 0);
             
@@ -168,6 +172,24 @@ export class Graph<T extends number | string>{
             }
         }
         return true;
+    }
+    
+    dijkstra(from: T): HashMap<T,number>{
+        let result = new HashMap<T,number>();
+        let search = (vertex: Vertex<T>) =>{
+            vertex.edges.values().forEach(edge=>{
+                let cost = (result.get(vertex.value) || 0) + edge.weight;
+
+                if(result.hasKey(edge.to.value) && cost >= result.get(edge.to.value)){
+                    return;
+                }
+
+                result.addOrUpdate(edge.to.value, cost);
+                search(edge.to);
+            });
+        };
+        search(this.vertices.get(from));
+        return result;
     }
 }
 
