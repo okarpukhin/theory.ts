@@ -29,6 +29,18 @@ export class HashMap<TKey, TValue>{
         }
     }
 
+    size(){
+        let result = 0;
+        this.items.filter(f=>f).forEach(f=>{
+            let current = f;
+            while(current){
+                result++;
+                current = current.next;
+            } 
+        });
+        return result;
+    }
+
     get(key: TKey): TValue {
         let index = getHashCode(key);
         let item = this.items[index];

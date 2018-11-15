@@ -128,7 +128,7 @@ describe('Graph', () => {
         assert.isFalse(graph.isDirectedAcyclicGraph());
     });
 
-    it('dijkstra', () => {
+    it('Dijkstra', () => {
         var graph = new Graph<number>();
         graph.addVertex(1,2,3,4,5,6);
 
@@ -146,6 +146,27 @@ describe('Graph', () => {
         graph.addEdgeOrUpdate(5, 4, 1, false);
         graph.addEdgeOrUpdate(5, 6, 20, false);
 
-        assert.deepEqual(graph.dijkstra(1).toDictionary(), { 2: 10, 3: 16, 4: 14, 5: 13, 6: 23 });
+        assert.deepEqual(graph.Dijkstra(1).toDictionary(), { 2: 10, 3: 16, 4: 14, 5: 13, 6: 23 });
+    });
+
+    it('BellmanFord', () => {
+        var graph = new Graph<number>();
+        graph.addVertex(1,2,3,4,5,6);
+
+        graph.addEdgeOrUpdate(1, 2, 10, false);
+        graph.addEdgeOrUpdate(1, 3, 30, false);
+
+        graph.addEdgeOrUpdate(2, 4, 8, false);
+        graph.addEdgeOrUpdate(2, 5, 3, false);
+    
+        graph.addEdgeOrUpdate(3, 4, 2, true);
+        graph.addEdgeOrUpdate(3, 6, 7, false);
+
+        graph.addEdgeOrUpdate(4, 6, 12, false);
+
+        graph.addEdgeOrUpdate(5, 4, 1, false);
+        graph.addEdgeOrUpdate(5, 6, 20, false);
+
+        assert.deepEqual(graph.BellmanFord(1).toDictionary(), { 2: 10, 3: 16, 4: 14, 5: 13, 6: 23 });
     });
 });

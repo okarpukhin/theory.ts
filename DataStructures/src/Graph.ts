@@ -5,7 +5,6 @@ import { Queue } from "./Queue";
 
 export class Graph<T extends number | string>{
     readonly vertices: HashMap<T,Vertex<T>> = new HashMap();
-
     /**
      * Complexity O(1)
      */
@@ -174,7 +173,7 @@ export class Graph<T extends number | string>{
         return true;
     }
     
-    dijkstra(from: T): HashMap<T,number>{
+    Dijkstra(from: T): HashMap<T,number>{
         let result = new HashMap<T,number>();
         let search = (vertex: Vertex<T>) =>{
             vertex.edges.values().forEach(edge=>{
@@ -189,6 +188,28 @@ export class Graph<T extends number | string>{
             });
         };
         search(this.vertices.get(from));
+        return result;
+    }
+
+    BellmanFord(from: T): HashMap<T,number>{
+        let result = new HashMap<T,number>();
+        let edges: Edge<T>[] = [];
+        this.vertices.values().forEach(f=>edges.push(...f.edges.values()));
+
+        for(let i = 0; i < this.vertices.size() - 1; i++){
+            let hasChanges = false;
+            edges.forEach(edge=>{
+                let newValue = (result.get(edge.from.value) || 0) + edge.weight;
+                result.addOrUpdate(edge.to.value, newValue, (key, oldValue)=>{
+                    hasChanges = true;
+                    return newValue < oldValue ? newValue : oldValue;
+                });
+            });
+
+            if(!hasChanges){
+                break;
+            }
+        }
         return result;
     }
 }
