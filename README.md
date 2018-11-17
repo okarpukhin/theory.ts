@@ -1,3 +1,6 @@
+### Dynamic Programming
+- [LongestCommonSubsequence](Algorithms/src/DynamicProgramming/LongestCommonSubsequence.ts)
+
 ### Search Algorithms
 - [BinarySearch](Algorithms/src/Search/BinarySearch.ts)
 - [BoyerMooreStringSearch](Algorithms/src/Search/BoyerMooreStringSearch.ts)

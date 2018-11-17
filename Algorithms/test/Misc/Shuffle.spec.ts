@@ -1,6 +1,6 @@
 import { CreateShuffledArray } from "../../src/Misc/Shuffle";
 import { MergeSort } from "../../src/Sort/MergeSort";
-import { assert, expect } from 'chai';
+import { assert } from 'chai';
 
 describe('Shuffle', () => {
     it('CreateShuffledArray', () => {
