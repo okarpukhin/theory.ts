@@ -2,41 +2,38 @@
  * Complexity O(n log n)
  */
 export function MergeSort<T extends (number | string)>(array: T[]): T[]{
-    return doMergeSort(array, 0, array.length);
-}
-
-function doMergeSort<T extends (number | string)>(array: T[], from: number, length: number): T[]{
-    if(length <= 1){
-        return array.slice(from, length);
+    if(array.length <= 1){
+        return array;
     }
 
-    let middle = Math.floor(length / 2);
+    let middle = array.length / 2;
 
     return doMerge(
-        doMergeSort(array, from, middle),
-        doMergeSort(array, middle, length - middle),
+        MergeSort(array.slice(0, middle)),
+        MergeSort(array.slice(middle, array.length))
     );
 }
 
 function doMerge<T>(leftArray: T[], rightArray: T[]): T[] {
-    let result: T[] = new Array(leftArray.length + rightArray.length);
+    let result: T[] = [];
 
-    let resultIndex = 0;
     let leftIndex = 0;
     let rightIndex = 0;
     while(leftIndex < leftArray.length && rightIndex < rightArray.length){
-        if(leftArray[leftIndex] < rightIndex[rightIndex]){
-            result[resultIndex++] = leftArray[leftIndex++];
+        if(leftArray[leftIndex] < rightArray[rightIndex]){
+            result.push(leftArray[leftIndex++]);
+        } else if(leftArray[leftIndex] > rightArray[rightIndex]) {
+            result.push(rightArray[rightIndex++]);
         } else {
-            result[resultIndex++] = rightArray[rightIndex++];
+            result.push(leftArray[leftIndex++]);
+            result.push(rightArray[rightIndex++]);
         }
     }
     while(leftIndex < leftArray.length){
-        result[resultIndex++] = leftArray[leftIndex++];
-        leftIndex++;
+        result.push(leftArray[leftIndex++]);
     }
     while(rightIndex < rightArray.length){
-        result[resultIndex++] = rightArray[rightIndex++];
+        result.push(rightArray[rightIndex++]);
     }
     return result;
 }

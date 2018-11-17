@@ -23,3 +23,6 @@
 - [Queue](DataStructures/src/Queue.ts)
 - [Stack](DataStructures/src/Stack.ts)
 - [Trie](DataStructures/src/Trie.ts)
+
+## Miscellaneous
+- [Shuffle array](Algorithms/src/Misc/Shuffle.ts)
