@@ -1,4 +1,4 @@
-import { getHashCode, capacity } from "../../Utils/src/Common"
+import { getHashCode, capacity, equalsAsJSON } from "../../Utils/src/Common"
 
 export class HashSet<T>{
     private readonly items: Entry<T>[] = new Array<Entry<T>>(capacity);
@@ -17,7 +17,7 @@ export class HashSet<T>{
         }
 
         let tail: Entry<T>;
-        while(item && item.key !== key){
+        while(item && !equalsAsJSON(item.key, key)){
             tail = item;
             item = item.next;
         }
@@ -33,7 +33,7 @@ export class HashSet<T>{
         let index = getHashCode(key);
         let item = this.items[index];
 
-        while(item && item.key !== key){
+        while(item && !equalsAsJSON(item.key, key)){
             item = item.next;
         }
 
@@ -45,7 +45,7 @@ export class HashSet<T>{
         let item = this.items[index];
 
         let prev: Entry<T>;
-        while(item && item.key !== key){
+        while(item && !equalsAsJSON(item.key, key)){
             prev = item;
             item = item.next;
         }

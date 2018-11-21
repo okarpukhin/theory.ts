@@ -21,6 +21,10 @@ export function getHashCode(key): number {
     return hash % capacity;
 }
 
+export function equalsAsJSON<T>(a: T, b: T): boolean {
+    return JSON.stringify(a) === JSON.stringify(b);
+}
+
 export function swap(array: any[], indexA: number, indexB: number): void{
     let temp = array[indexA];
     array[indexA] = array[indexB];
@@ -57,3 +61,21 @@ export function isOrderedArray<T extends (number | string)>(array: T[]):boolean{
 export function random(from: number, to: number): number{
     return Math.round((to - from) * Math.random()) + from;
 }
+
+class Counter{
+    private count = 0;
+
+    increment(){
+        this.count++;
+    }
+
+    reset(){
+        this.count = 0;
+    }
+
+    get value(){
+        return this.count;
+    }
+}
+
+export let counter = new Counter();

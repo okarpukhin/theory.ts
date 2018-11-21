@@ -1,4 +1,4 @@
-import { getHashCode, capacity } from "../../Utils/src/Common"
+import { getHashCode, capacity, equalsAsJSON } from "../../Utils/src/Common"
 
 export class HashMap<TKey, TValue>{
     private readonly items: Entry<TKey,TValue>[] = new Array<Entry<TKey,TValue>>(capacity);
@@ -13,7 +13,7 @@ export class HashMap<TKey, TValue>{
         }
 
         let tail: Entry<TKey,TValue>;
-        while(item && item.key !== key){
+        while(item && !equalsAsJSON(item.key, key)){
             tail = item;
             item = item.next;
         }
@@ -45,7 +45,7 @@ export class HashMap<TKey, TValue>{
         let index = getHashCode(key);
         let item = this.items[index];
 
-        while(item && item.key !== key){
+        while(item && !equalsAsJSON(item.key, key)){
             item = item.next;
         }
 
@@ -56,7 +56,7 @@ export class HashMap<TKey, TValue>{
         let index = getHashCode(key);
         let item = this.items[index];
 
-        while(item && item.key !== key){
+        while(item && !equalsAsJSON(item.key, key)){
             item = item.next;
         }
 
@@ -68,7 +68,7 @@ export class HashMap<TKey, TValue>{
         let item = this.items[index];
 
         let prev: Entry<TKey,TValue>;
-        while(item && item.key !== key){
+        while(item && !equalsAsJSON(item.key, key)){
             prev = item;
             item = item.next;
         }
