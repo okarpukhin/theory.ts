@@ -19,6 +19,10 @@ export class Array2D<T>{
         }
     }
 
+    get length(){
+        return this.rows * this.columns;
+    }
+
     get(row: number, column: number){
         this.check(row, column);
 
@@ -38,6 +42,38 @@ export class Array2D<T>{
         this.check(row, column);
 
         this.items[row][column] = value;
+    }
+
+    setValues(items: T[]){
+        if(items.length !== this.length){
+            throw new Error("Invalid argument");
+        }
+        let index = 0;
+        for(let r = 0; r < this.rows; r++){
+            for(let c = 0; c < this.columns; c++){
+                this.items[r][c] = items[index++];
+            }
+        }
+    }
+
+    filter(callback: (value: T, row: number, column: number) => boolean): { value: T, row: number, column: number }[]{
+        let result:{ value: T, row: number, column: number }[] = [];
+        for(let r = 0; r < this.rows; r++){
+            for(let c = 0; c < this.columns; c++){
+                if(callback(this.items[r][c], r, c)){
+                    result.push({ value: this.items[r][c], row: r, column: c});
+                }
+            }
+        }
+        return result;
+    }
+
+    forEach(callback: (value: T, row: number, column: number) => void): void{
+        for(let r = 0; r < this.rows; r++){
+            for(let c = 0; c < this.columns; c++){
+                callback(this.items[r][c], r, c);
+            }
+        }
     }
 
     private check(row: number, column: number){

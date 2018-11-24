@@ -1,7 +1,9 @@
 ### Dynamic Programming
+- [Knapsack](Algorithms/src/DynamicProgramming/Knapsack.ts)
 - [LongestCommonSubsequence](Algorithms/src/DynamicProgramming/LongestCommonSubsequence.ts)
 
 ### Search Algorithms
+- [A-star](Algorithms/src/Search/AStar.ts)
 - [BinarySearch](Algorithms/src/Search/BinarySearch.ts)
 - [BoyerMooreStringSearch](Algorithms/src/Search/BoyerMooreStringSearch.ts)
 - [KnuthMorrisPratt](Algorithms/src/Search/KnuthMorrisPratt.ts) (prefix function and search)
