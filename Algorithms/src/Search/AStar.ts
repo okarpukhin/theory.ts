@@ -1,35 +1,56 @@
-import { HashSet } from "../../../DataStructures/src/HashSet";
+import { HashMap } from "../../../DataStructures/src/HashMap";
 import { BinaryHeapMap, Entry } from "../../../DataStructures/src/BinaryHeapMap";
 import { Array2D } from "../../../DataStructures/src/Array2D";
 import { equalsAsJSON } from "../../../Utils/src/Common";
 
-export interface Point {
+interface Point {
     x: number,
     y: number,
 }
 
-export function AStarToMap(map: Array2D<boolean>, start: Point, end: Point): Entry<number,Point[]>{
-    let closed = new HashSet<Point>();
-    let open = new BinaryHeapMap<number,Point[]>("MinHeap");
-    open.push(h(start, end), [start]);
+class Path {
+    readonly path: Point[];
+    readonly g: number;
+
+    constructor(path: Point[], g: number){
+        this.path = path;
+        this.g = g;
+    }
+
+    get last(){
+        return this.path[this.path.length - 1];
+    }
+}
+
+export function AStarToMap(map: Array2D<boolean>, start: Point, end: Point): Path{
+    let closed = new HashMap<Point, Path>();
+    let open = new BinaryHeapMap<number, Path>("MinHeap");
+    open.push(h(start, end), new Path([start], 0));
 
     while(!open.isEmpty){
         let current = open.pop();
-        let lastPoint = current.value[current.value.length - 1];
+        let lastPoint = current.value.last;
+
+        let isClosed = closed.hasKey(lastPoint);
+
+        closed.addOrUpdate(lastPoint, current.value, (key, oldValue)=>{
+            return oldValue.g < current.value.g ? oldValue : current.value;
+        });
+
         if(equalsAsJSON(lastPoint, end)){
-            return current;
+            return current.value;
         }
-        if(closed.contains(lastPoint)){
+
+        if(isClosed){
             continue;
         }
-        closed.add(lastPoint);
-
+        
         let neighbors = getNeighbors(map, lastPoint);
         neighbors.forEach(f=>{
             let path = [];
-            path.push(...current.value);
+            path.push(...current.value.path);
             path.push(f);
-            open.push(h(f, end) + current.key, path);
+            open.push(current.value.g + h(f, end) + h(lastPoint, f), new Path(path, current.value.g + h(lastPoint, f)));
         });
     }
 }   
@@ -38,7 +59,7 @@ function getNeighbors(map: Array2D<boolean>, current: Point): Point[]{
     let result: Point[] = [];
     map.forEach((value, y, x)=>{
         if(value === false && Math.abs(x - current.x) <= 1 && Math.abs(y - current.y) <= 1){
-            result.push({x: x, y: y});
+            result.push({ x: x, y: y });
         }
     });
     return result;
